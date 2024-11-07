@@ -1,0 +1,3 @@
+displayName = Limbus Company Weapon Pack
+author = Baturbai
+version = 0.1
