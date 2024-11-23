@@ -14,6 +14,7 @@ namespace LCWeaponPack.Content.Items
         int CurrentCoin { get; set; }
 
         Dictionary<Skill, List<short>> ProjectilesDict {get;}
+        double AdditianialMultiplierDamage { get; set; }
 
     }
 }

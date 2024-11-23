@@ -9,6 +9,7 @@ using Terraria;
 namespace LCWeaponPack.Common.Systems{
     public class AttackSystem : ModSystem
     {
+        private CoinFlipper coinFlipper = new CoinFlipper();
         // weapon : (skill : (TotalCoins, CurrentCoin))
         private Dictionary<Item, Dictionary<Skill, List<int>>> WeaponSkillCoinMap = new Dictionary<Item, Dictionary<Skill, List<int>>>();
         private Dictionary<Item, Skill> CurrentWeaponSkills = new Dictionary<Item, Skill>();
@@ -26,7 +27,12 @@ namespace LCWeaponPack.Common.Systems{
         {
             if (HasCoinsLeft(weapon))
             {
-                bool result = CoinFlipper.MakeCoinFlip();
+                bool result = coinFlipper.MakeCoinFlip();
+                if (result && weapon.ModItem is IWeapon myItem)
+                {
+                    myItem.AdditianialMultiplierDamage += 0.05
+                }
+
                 DecreaseCoinCount(weapon);
                 UpdateWeaponState(weapon);
                 DisplaySkillInfo(weapon);
@@ -95,6 +101,7 @@ namespace LCWeaponPack.Common.Systems{
             if (weapon.ModItem is IWeapon myItem)
             {
                 myItem.CurrentSkill = CurrentWeaponSkills[weapon];
+                myItem.AdditianialMultiplierDamage = 0;
             }
         }
     }

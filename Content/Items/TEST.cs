@@ -16,6 +16,7 @@ namespace LCWeaponPack.Content.Items
 { 
 	public class TEST : ModItem, IWeapon
 	{
+
 		private AttackSystem attackSystem = ModContent.GetInstance<AttackSystem>();
 
 		private Skill currentSkill;
@@ -37,6 +38,8 @@ namespace LCWeaponPack.Content.Items
         };
 
 		public Dictionary<Skill, List<short>> ProjectilesDict { get { return projectilesDict; } }
+
+        public double AdditianialMultiplierDamage { get; set; }
 
         public override bool CanShoot(Player player)
         {
@@ -60,7 +63,8 @@ namespace LCWeaponPack.Content.Items
 			attackSystem.RegisterItem(NewSession);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            Projectile.NewProjectile(source, player.MountedCenter, new Vector2(player.direction * 15f, 0f), type, damage, 
+			int buffedDamage = damage + (int)(AdditianialMultiplierDamage * damage);
+            Projectile.NewProjectile(source, player.MountedCenter, new Vector2(player.direction * 15f, 0f), type, buffedDamage, 
 				knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax);
             return false;
 		}
